@@ -3,10 +3,9 @@ from OpenGL.GLUT import *
 from OpenGL.GLU import *
 import random
 
-# ---------------- WINDOW ----------------
+
 WINDOW_WIDTH, WINDOW_HEIGHT = 1000, 700
 
-# ---------------- BIRD ----------------
 bird_x = -2.0
 bird_y = 0.0
 
@@ -14,13 +13,12 @@ bird_vel = 0.0
 gravity = -0.0005
 jump_strength = 0.025
 
-# ---------------- GAME ----------------
+
 score = 0
 pipes = [[10.0, random.uniform(-2, 1)]]
 game_active = True
 
 
-# ---------------- TEXT ----------------
 def draw_text(x, y, text):
     glColor3f(1.0, 1.0, 0.0)
     glMatrixMode(GL_PROJECTION)
@@ -42,7 +40,7 @@ def draw_text(x, y, text):
     glMatrixMode(GL_MODELVIEW)
 
 
-# ---------------- PIPE ----------------
+
 def draw_pipe_with_cap(x, y_height, is_top=False):
     quad = gluNewQuadric()
     glColor3f(0.0, 0.7, 0.0)
@@ -63,32 +61,31 @@ def draw_pipe_with_cap(x, y_height, is_top=False):
     glPopMatrix()
 
 
-# ---------------- 🐦 FULL 3D BIRD ----------------
 def draw_styled_bird():
     glPushMatrix()
     glTranslatef(bird_x, bird_y, 0)
 
-    # tilt based on velocity
+    
     glRotatef(bird_vel * 300, 0, 0, 1)
 
-    # 🟤 BODY
+   
     glColor3f(0.1, 0.1, 0.1)
     glutSolidSphere(0.6, 50, 50)
 
-    # 🟣 BACK BODY (depth)
+    
     glPushMatrix()
     glTranslatef(-0.4, 0, 0)
     glScalef(0.8, 0.6, 0.6)
     glutSolidSphere(0.5, 40, 40)
     glPopMatrix()
 
-    # 🟡 HEAD
+    
     glPushMatrix()
     glTranslatef(0.55, 0.25, 0)
     glColor3f(0.15, 0.15, 0.15)
     glutSolidSphere(0.35, 40, 40)
 
-    # 👁 eye
+   
     glColor3f(1, 1, 1)
     glTranslatef(0.15, 0.1, 0.2)
     glutSolidSphere(0.12, 20, 20)
@@ -99,7 +96,7 @@ def draw_styled_bird():
 
     glPopMatrix()
 
-    # 🟠 BEAK
+    
     glColor3f(1.0, 0.6, 0.0)
     glPushMatrix()
     glTranslatef(0.75, -0.05, 0)
@@ -107,7 +104,7 @@ def draw_styled_bird():
     glutSolidCone(0.18, 0.5, 30, 30)
     glPopMatrix()
 
-    # 🪽 LEFT WING
+  
     glColor3f(0.05, 0.05, 0.05)
     glPushMatrix()
     glTranslatef(-0.1, 0.1, 0.5)
@@ -116,7 +113,7 @@ def draw_styled_bird():
     glutSolidCube(1)
     glPopMatrix()
 
-    # 🪽 RIGHT WING
+   
     glPushMatrix()
     glTranslatef(-0.1, 0.1, -0.5)
     glRotatef(-25, 0, 0, 1)
@@ -124,7 +121,7 @@ def draw_styled_bird():
     glutSolidCube(1)
     glPopMatrix()
 
-    # 🪶 TAIL
+   
     glColor3f(0.08, 0.08, 0.08)
     glPushMatrix()
     glTranslatef(-0.7, -0.1, 0)
@@ -135,7 +132,6 @@ def draw_styled_bird():
     glPopMatrix()
 
 
-# ---------------- DISPLAY ----------------
 def display():
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
     glLoadIdentity()
@@ -152,7 +148,7 @@ def display():
         draw_pipe_with_cap(p[0], p[1], is_top=False)
         draw_pipe_with_cap(p[0], p[1] + 3.8, is_top=True)
 
-    # Ground
+    
     glColor3f(0.2, 0.5, 0.2)
     glPushMatrix()
     glTranslatef(0, -6.5, 0)
@@ -163,7 +159,6 @@ def display():
     glutSwapBuffers()
 
 
-# ---------------- UPDATE ----------------
 def update(v):
     global bird_y, bird_vel, pipes, score, game_active
 
@@ -195,7 +190,6 @@ def update(v):
     glutTimerFunc(16, update, 0)
 
 
-# ---------------- RESET ----------------
 def reset_game():
     global bird_y, bird_vel, score, pipes
     bird_y = 0
@@ -204,7 +198,6 @@ def reset_game():
     pipes = [[10.0, random.uniform(-2, 1)]]
 
 
-# ---------------- CONTROLS ----------------
 def keyboard(key, x, y):
     global bird_vel
 
@@ -223,7 +216,6 @@ def special_input(key, x, y):
         bird_vel = -jump_strength
 
 
-# ---------------- INIT ----------------
 glutInit()
 glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH)
 glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT)
