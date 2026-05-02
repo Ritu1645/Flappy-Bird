@@ -13,7 +13,6 @@ bird_vel = 0.0
 gravity = -0.0005
 jump_strength = 0.025
 
-
 score = 0
 pipes = [[10.0, random.uniform(-2, 1)]]
 game_active = True
@@ -40,7 +39,6 @@ def draw_text(x, y, text):
     glMatrixMode(GL_MODELVIEW)
 
 
-
 def draw_pipe_with_cap(x, y_height, is_top=False):
     quad = gluNewQuadric()
     glColor3f(0.0, 0.7, 0.0)
@@ -65,27 +63,22 @@ def draw_styled_bird():
     glPushMatrix()
     glTranslatef(bird_x, bird_y, 0)
 
-    
     glRotatef(bird_vel * 300, 0, 0, 1)
 
-   
     glColor3f(0.1, 0.1, 0.1)
     glutSolidSphere(0.6, 50, 50)
 
-    
     glPushMatrix()
     glTranslatef(-0.4, 0, 0)
     glScalef(0.8, 0.6, 0.6)
     glutSolidSphere(0.5, 40, 40)
     glPopMatrix()
 
-    
     glPushMatrix()
     glTranslatef(0.55, 0.25, 0)
     glColor3f(0.15, 0.15, 0.15)
     glutSolidSphere(0.35, 40, 40)
 
-   
     glColor3f(1, 1, 1)
     glTranslatef(0.15, 0.1, 0.2)
     glutSolidSphere(0.12, 20, 20)
@@ -96,7 +89,6 @@ def draw_styled_bird():
 
     glPopMatrix()
 
-    
     glColor3f(1.0, 0.6, 0.0)
     glPushMatrix()
     glTranslatef(0.75, -0.05, 0)
@@ -104,7 +96,6 @@ def draw_styled_bird():
     glutSolidCone(0.18, 0.5, 30, 30)
     glPopMatrix()
 
-  
     glColor3f(0.05, 0.05, 0.05)
     glPushMatrix()
     glTranslatef(-0.1, 0.1, 0.5)
@@ -113,7 +104,6 @@ def draw_styled_bird():
     glutSolidCube(1)
     glPopMatrix()
 
-   
     glPushMatrix()
     glTranslatef(-0.1, 0.1, -0.5)
     glRotatef(-25, 0, 0, 1)
@@ -121,7 +111,6 @@ def draw_styled_bird():
     glutSolidCube(1)
     glPopMatrix()
 
-   
     glColor3f(0.08, 0.08, 0.08)
     glPushMatrix()
     glTranslatef(-0.7, -0.1, 0)
@@ -148,7 +137,6 @@ def display():
         draw_pipe_with_cap(p[0], p[1], is_top=False)
         draw_pipe_with_cap(p[0], p[1] + 3.8, is_top=True)
 
-    
     glColor3f(0.2, 0.5, 0.2)
     glPushMatrix()
     glTranslatef(0, -6.5, 0)
@@ -198,28 +186,25 @@ def reset_game():
     pipes = [[10.0, random.uniform(-2, 1)]]
 
 
-def keyboard(key, x, y):
-    global bird_vel
-
-    if key == b' ' or key == b'w':
-        bird_vel = jump_strength
-    elif key == b's':
-        bird_vel = -jump_strength
-
 
 def special_input(key, x, y):
     global bird_vel
 
     if key == GLUT_KEY_UP:
         bird_vel = jump_strength
+
     elif key == GLUT_KEY_DOWN:
         bird_vel = -jump_strength
+
+
+def keyboard(key, x, y):
+    pass
 
 
 glutInit()
 glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH)
 glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT)
-glutCreateWindow(b"FULL 3D Flappy Bird")
+glutCreateWindow(b"FULL 3D Flappy Bird - Arrow Control Only")
 
 glEnable(GL_DEPTH_TEST)
 
@@ -230,8 +215,8 @@ glMatrixMode(GL_MODELVIEW)
 glClearColor(0.4, 0.8, 1.0, 1.0)
 
 glutDisplayFunc(display)
-glutKeyboardFunc(keyboard)
-glutSpecialFunc(special_input)
+glutKeyboardFunc(keyboard)        
+glutSpecialFunc(special_input)    
 glutTimerFunc(0, update, 0)
 
 glutMainLoop()
